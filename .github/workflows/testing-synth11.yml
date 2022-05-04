@@ -9,21 +9,15 @@ jobs:
         run: cd classic-load-balancer
       - name: install aws-cdk
         run: npm install -g aws-cdk
-      - name: run npm install
+      - name: run npm install, run build, convert cdk template
         run: |
           cd classic-load-balancer
           npm install
-      - name: run build command
-        run: |
-          cd classic-load-balancer
           npm run build
-      - name: convert cdk template
-        run: |
-          cd classic-load-balancer
           cdk synth
       - name: Run Snyk to check CDK output for iac issues
         uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      - name: get results to the snyk ui
-        run: snyk iac test cdk-synth-test --report
+        with:
+          args: --report

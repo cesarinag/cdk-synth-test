@@ -4,8 +4,6 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - name: cd into directory
-        run: cd /classic-load-balancer
       - name: install aws-cdk
         run: npm install -g aws-cdk
       - name: npm install

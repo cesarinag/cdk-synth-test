@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./classic-load-balancer
+        working-directory: classic-load-balancer
     steps:
       - name: install aws-cdk
         run: npm install -g aws-cdk

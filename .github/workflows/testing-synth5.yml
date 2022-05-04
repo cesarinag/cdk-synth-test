@@ -1,0 +1,29 @@
+name: Example workflow for Snyk Infrastructure as Code using CDK Synth
+on: [push, pull_request]
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: change to directory
+        run: cd classic-load-balancer
+      - name: install aws-cdk
+        run: npm install -g aws-cdk
+      - name: run npm install
+        run: |
+          cd classic-load-balancer
+          npm install
+      - name: run build command
+        run: |
+          cd classic-load-balancer
+          npm run build
+      - name: convert cdk template
+        run: |
+          cd classic-load-balancer
+          cdk synth
+      - name: Run Snyk to check CDK output for iac issues
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          file: cdk.out/LoadBalancerStack.template.json

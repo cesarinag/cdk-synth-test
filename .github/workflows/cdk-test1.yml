@@ -3,11 +3,12 @@ on: [push, pull_request]
 jobs:
   security:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./classic-load-balancer
     steps:
       - name: install aws-cdk
         run: npm install -g aws-cdk
-      - name: cd into directory 
-        run: cd classic-load-balancer
       - name: npm install
         run: npm install
       - name: run build command
